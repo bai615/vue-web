@@ -50,6 +50,14 @@
 <script>
   export default {
     name: 'Index',
+    created: function () {
+      this.$http.get('getList')
+        .then(function (data) {
+          console.log(data)
+        }, function (error) {
+          console.log(error)
+        })
+    },
     data () {
       return {
         boardList: [
