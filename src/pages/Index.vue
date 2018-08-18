@@ -51,7 +51,7 @@
   export default {
     name: 'Index',
     created: function () {
-      this.$http.get('getList')
+      this.$http.get('api/getBoardList')
         .then(function (data) {
           console.log(data)
         }, function (error) {
