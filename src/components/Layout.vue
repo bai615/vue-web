@@ -2,14 +2,14 @@
   <div>
     <div class="app-head">
       <div class="app-head-inner">
-          <img src="../assets/logo.png">
+        <img src="../assets/logo.png">
         <div class="head-nav">
           <ul class="nav-list">
-            <li><router-link to="/hello">登录</router-link></li>
+            <li @click="logClick">登录</li>
             <li class="nav-pile">|</li>
-            <li>注册</li>
+            <li @click="regClick">注册</li>
             <li class="nav-pile">|</li>
-            <li>关于</li>
+            <li @click="aboutClick">关于</li>
           </ul>
         </div>
       </div>
@@ -20,19 +20,54 @@
     <div class="app-foot">
       <p>© 2018 大漠胡杨 MIT</p>
     </div>
+    <my-dialog :is-show="isShowLogDialog" @on-close="closeDialog('isShowLogDialog')">
+      <p>login dialog</p>
+    </my-dialog>
+    <my-dialog :is-show="isShowRegDialog" @on-close="closeDialog('isShowRegDialog')">
+      <p>register dialog</p>
+    </my-dialog>
+    <my-dialog :is-show="isShowAboutDialog" @on-close="closeDialog('isShowAboutDialog')">
+      <p>about dialog</p>
+    </my-dialog>
   </div>
 </template>
 
 <script>
-    export default {
-        name: 'Layout'
+  import Dialog from '@/components/Dialog'
+
+  export default {
+    name: 'Layout',
+    components: {
+      'MyDialog': Dialog
+    },
+    data () {
+      return {
+        isShowLogDialog: false,
+        isShowRegDialog: false,
+        isShowAboutDialog: false
+      }
+    },
+    methods: {
+      logClick () {
+        this.isShowLogDialog = true
+      },
+      regClick () {
+        this.isShowRegDialog = true
+      },
+      aboutClick () {
+        this.isShowAboutDialog = true
+      },
+      closeDialog (attr) {
+        this[attr] = false
+      }
     }
+  }
 </script>
 
 <style>
   body {
     background: #f0f2f5;
-    font-family: "Helvetica Neue",Helvetica,Arial,"Hiragino Sans GB","Hiragino Sans GB W3","Microsoft YaHei UI","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+    font-family: "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", "Hiragino Sans GB W3", "Microsoft YaHei UI", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
     font-size: 14px;
     color: #444;
   }
