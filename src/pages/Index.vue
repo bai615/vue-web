@@ -26,7 +26,7 @@
       </div>
     </div>
     <div class="index-right">
-      <slide-show :slides="slides" :inv="slideSpeed"></slide-show>
+      <slide-show :slides="slides" :inv="slideSpeed" @onchange="doSomethingOnSlideChange"></slide-show>
       <div class="index-board-list">
         <div
           class="index-board-item"
@@ -68,6 +68,11 @@
         }, (error) => {
           console.log(error)
         })
+    },
+    methods: {
+      doSomethingOnSlideChange () {
+        console.log('doSomethingOnSlideChange run')
+      }
     },
     data () {
       return {
