@@ -85,5 +85,12 @@
         }
       ]
     }
+  },
+  "login": {
+    "username": "admin@test.com",
+    "userId": 8
+  },
+  "logout": {
+    "status": true
   }
 }

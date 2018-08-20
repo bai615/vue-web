@@ -83,7 +83,14 @@
           this.errorText = '用户名或者密码格式错误'
         } else {
           this.errorText = ''
-          console.log('logging')
+          // console.log('logging')
+          this.$http.post('api/login', {username: this.usernameModel, password: this.passwordModel})
+            .then((res) => {
+              console.log(res)
+              this.$emit('has-login', res.data)
+            }, (error) => {
+              console.log(error)
+            })
         }
         // console.log(this.usernameModel, this.passwordModel)
       }
