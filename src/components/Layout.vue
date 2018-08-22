@@ -7,9 +7,16 @@
         </router-link>
         <div class="head-nav">
           <ul class="nav-list">
-            <li @click="logClick">登录</li>
-            <li class="nav-pile">|</li>
-            <li @click="regClick">注册</li>
+            <template v-if="username">
+              <li>{{ username }}</li>
+              <li class="nav-pile">|</li>
+              <li @click="quitClick">退出</li>
+            </template>
+            <template v-else>
+              <li @click="logClick">登录</li>
+              <li class="nav-pile">|</li>
+              <li @click="regClick">注册</li>
+            </template>
             <li class="nav-pile">|</li>
             <li @click="aboutClick">关于</li>
           </ul>
@@ -23,7 +30,7 @@
       <p>© 2018 大漠胡杨 MIT</p>
     </div>
     <my-dialog :is-show="isShowLogDialog" @on-close="closeDialog('isShowLogDialog')">
-      <log-form></log-form>
+      <log-form @has-login="onSuccessLogin"></log-form>
     </my-dialog>
     <my-dialog :is-show="isShowRegDialog" @on-close="closeDialog('isShowRegDialog')">
       <reg-form></reg-form>
@@ -50,12 +57,22 @@
       return {
         isShowLogDialog: false,
         isShowRegDialog: false,
-        isShowAboutDialog: false
+        isShowAboutDialog: false,
+        username: ''
       }
     },
     methods: {
       logClick () {
         this.isShowLogDialog = true
+      },
+      quitClick () {
+        this.$http.get('api/logout')
+          .then((res) => {
+            console.log(res)
+            this.username = ''
+          }, (error) => {
+            console.log(error)
+          })
       },
       regClick () {
         this.isShowRegDialog = true
@@ -65,6 +82,13 @@
       },
       closeDialog (attr) {
         this[attr] = false
+      },
+      onSuccessLogin (data) {
+        console.log(data)
+        // 关闭登录对话框
+        this.closeDialog('isShowLogDialog')
+        // 将登录信息赋值
+        this.username = data.username
       }
     }
   }
